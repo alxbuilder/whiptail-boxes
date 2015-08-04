@@ -1,9 +1,10 @@
 #!/bin/bash
-#(@) Whiptail inputbox
+#(@) Whiptail msgbox
 
 . ./functions
 
 # Sample data to illustrate what problem this solves.
+BOXTYPE="--msgbox"
 MESSAGE="This is a longwinded message to the user, to demonstrate \
   that only the '--title' should be used to determine the box size"
 TITLE="This title will be shortend if not kept short enough to fit in \
@@ -14,8 +15,10 @@ TITLE="This title will be shortend if not kept short enough to fit in \
 LENGTH=`max_width`
 
 # Produce our dialog box
-USERINPUT=$(whiptail 				\
+# USERINPUT=$(
+whiptail 				\
 		--title		"$TITLE"	\
-		--msgbox	"$MESSAGE"	\
-		8 $LENGTH 3>&1 1>&2 2>&3)
-echo You entered \"${USERINPUT}\"
+		$BOXTYPE	"$MESSAGE"	\
+		8 $LENGTH 3>&1 1>&2 2>&3
+#		)
+# echo You entered \"${USERINPUT}\"
