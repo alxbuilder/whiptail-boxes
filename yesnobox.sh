@@ -14,9 +14,7 @@ TITLE="This title will be shortend if not kept short enough to fit in \
 [ `too_long "$TITLE"` ] && TITLE=`shorten $TITLE`
 LENGTH=`max_width`
 
-USERINPUT=$(whiptail --title "$TITLE" $BOXTYPE "$MESSAGE" \
+whiptail --title "$TITLE" $BOXTYPE "$MESSAGE" \
 	--fb --ok-button "Allright" --cancel-button "Uh-ohh" \
 	--yes-button "yes please" --no-button "go away" \
-	10 50 "replace this" 3>&1 1>&2 2>&3)
-
-echo result is: $USERINPUT
+	10 50 "replace this" 3>&1 1>&2 2>&3

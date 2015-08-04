@@ -14,5 +14,11 @@ TITLE="This title will be shortend if not kept short enough to fit in \
 [ `too_long "$TITLE"` ] && TITLE=`shorten $TITLE`
 LENGTH=`max_width`
 
-USERINPUT=$(whiptail  --title "$TITLE" $BOXTYPE "$MESSAGE" 10 $LENGTH "type it here" 3>&2 2>&1 1>&3)
+USERINPUT=$(whiptail		\
+		--title "$TITLE"	\
+		$BOXTYPE			\
+		"$MESSAGE"			\
+		10 $LENGTH "type it here"	\
+		3>&2 2>&1 1>&3		\
+		)
 echo \"${USERINPUT}\"
