@@ -10,7 +10,7 @@ TITLE="This title will be shortend if not kept short enough to fit in \
   a dialog box that the screen can display"
 
 # Truncate the title if it's too big for the window
-[ too_long $TITLE ] && TITLE=`shorten $TITLE`]
+[ `too_long "$TITLE"` ] && TITLE=`shorten $TITLE`
 LENGTH=`max_width`
 
 # Produce our dialog box

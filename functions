@@ -41,3 +41,7 @@ function too_long() {
 function shorten() {
         echo $* |cut -c1-$(expr `rows` - 6)
 }
+
+function too_long_for_box() {
+		[ `too_long "$*"` ] && echo `shorten $TITLE`
+}
