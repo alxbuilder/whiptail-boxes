@@ -38,6 +38,6 @@ function too_long() {
         [ `length $*` -gt `max_width` ]
 }
 
-function truncate() {
+function shorten() {
         echo $* |cut -c1-$(expr `rows` - 6)
 }
