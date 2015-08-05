@@ -22,7 +22,7 @@ whiptail_menu() {
 	whiptail 			\
 	--title		"$TITLE" \
 	$BOXTYPE	"$MESSAGE" \
-	19 40 $MENUHEIGHT \
+	$HEIGHT 40 $MENUHEIGHT \
 		"1st"	"task 1"	off	\
 		"default" "task 2"	on	\
 		"3rd"	"task 3"	off	\
@@ -38,11 +38,24 @@ whiptail_menu() {
 	3>&1 1>&2 2>&3
 }
 
-MENUHEIGHT=$(grep '$BOXTYPE' -A 20 $0 |grep -B 20 '3>&1' |grep "\".*\".*\".*\"" |grep -v MENU |wc -l )
-# echo MENUHEIGHT is $MENUHEIGHT
-MENUCONTENT=$(grep '$BOXTYPE' -A 20 $0 |grep -B 20 '3>&1' |grep "\".*\".*\".*\""|grep -v MENU )
-# echo $MENUCONTENT
+# WARNING: This figure is the number of lines of THIS FILE containing
+# two doublequoted items on a single line, plus either o{n,ff} but NOT
+# uppercase 'menu'. It's a bit fragile ):
+MENUHEIGHT=$(grep '$BOXTYPE' -A 20 $0 |grep -B 20 '3>&1' \
+	|grep "\".*\".*\".*\"" |egrep -e on -e off |grep -v MENU |wc -l )
+# echo $MENUHEIGHT
+HEIGHT=`expr $MENUHEIGHT + 7`
+
+FULLBUTTON=$(grep '$BOXTYPE' -A 20 $0 |grep -B 20 '3>&1' \
+	|grep -v 'FULLBUTTON' |egrep -e '--fb')
+
+# Using FULLBUTTONs adds two lines to the box height
+[ -z "$FULLBUTTON" ] || HEIGHT=`expr $HEIGHT + 2`
+# echo $MENUHEIGHT $FULLBUTTON $HEIGHT
 # exit
+MENUCONTENT=$(grep '$BOXTYPE' -A 20 $0 |grep -B 20 '3>&1' \
+	|grep "\".*\".*\".*\"" |egrep -e on -e off |grep -v MENU )
+	# |grep "\".*\".*\".*\""|grep -v MENU )
 
 TASK=`whiptail_menu`
 echo $TASK
